@@ -1,6 +1,6 @@
-define(['controllers/todos_controller'],function(TodosController){
+define(['controllers/todos_controller','controllers/sessions_controller'],function(TodosController,SessionsController){
     return {
         todos : new TodosController(),
-        sessions : null,
+        sessions : new SessionsController(),
     };
 });

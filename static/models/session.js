@@ -8,6 +8,9 @@ define(['backbone'],function(Backbone){
         loginRequired : function(){
             return this.isNew();
         },
+        login : function(username){
+            this.save('username',username,{ success : _.bind(this.trigger,this,'login') });
+        },
     });
 });
 

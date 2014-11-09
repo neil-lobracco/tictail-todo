@@ -31,3 +31,7 @@ h1 {
 .todo-footer {
     min-height: 25px;
 }
+
+form.login {
+    min-height: 75px;
+}

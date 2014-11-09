@@ -1,7 +1,7 @@
 define(['backbone','underscore','controllers','models/session'],function(Backbone,_,Controllers,Session){
     return Backbone.Router.extend({
         initialize : function(){
-            this.session = new Session();
+            this.sessionController = Controllers['sessions'];
         },
         defaultController : 'todos',
         currentView : undefined,
@@ -14,9 +14,9 @@ define(['backbone','underscore','controllers','models/session'],function(Backbon
         handleAction : function(controller,action,id){
             var controller = Controllers[controller || this.defaultController];
             action = action || controller.defaultAction;
-            if (_.contains(controller.protectedActions,action) && this.session.loginRequired()){
-                controller = Controllers['sessions'];
-                action = 'new';
+            if (_.contains(controller.protectedActions,action) && this.sessionController.loginRequired()){
+                controller = this.sessionController;
+                action = 'login';
             }
             var view = controller[action]({
                 id : id,
@@ -28,7 +28,7 @@ define(['backbone','underscore','controllers','models/session'],function(Backbon
                     delete this.currentView;
                 }
                 this.currentView = view;
-                this.currentView.setElement('.main-content').render();
+                $('.main-content').append(this.currentView.render().$el)
             }
         },
     });

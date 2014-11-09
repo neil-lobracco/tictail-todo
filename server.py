@@ -39,16 +39,16 @@ def home():
 @app.route('/sessions', methods=['POST'])
 def login():
     username = request.json['username']
-    user = users.find_one({username : username})
+    user = users.find_one({'username' : username})
     userId = None
     if user is None:
         userId = str(users.insert({"username" : username, "created_at": datetime.datetime.now()}))
     else:
-        userId = str(user._id)
+        userId = str(user['_id'])
     session['userId'] = userId
     return jsonify({ "result" : "success", "userId" : userId })
 
-@app.route('/sessions/<id>', methods=['DELETE'])
+@app.route('/sessions/<userId>', methods=['DELETE'])
 def logout(userId):
     session['userId'] = None
     return jsonify({ "result" : "success"})
