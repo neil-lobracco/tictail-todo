@@ -89,4 +89,5 @@ def destroy(todoId):
 
 app.secret_key = "8xkgf643lkf23hf";
 app.secret_key = "8xkgf643lkf23hf";
-app.run(debug=True)
+port = int(os.getenv('PORT','5000'))
+app.run(debug=True,port=port)
