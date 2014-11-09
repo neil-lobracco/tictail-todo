@@ -3,7 +3,12 @@ define(['controller','views/todo/index','collections/todos'],function(Controller
         initialize : function(){
             this.todos = new Todos(window.todos || []);
             delete window.todos;
+            this.listenTo(this.mediator,'login',this.refetch);
          },
+        refetch : function(){
+            this.todos.reset();
+            this.todos.fetch();
+        },
         protectedActions : ['index'],
         index : function(params){
             return new TodosView({ collection : this.todos });

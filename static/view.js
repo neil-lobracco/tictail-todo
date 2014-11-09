@@ -1,5 +1,6 @@
-define(['handlebars'],function(Handlebars){
+define(['handlebars','mediator'],function(Handlebars,Mediator){
     return Backbone.View.extend({
+        mediator : Mediator,
         initialize : function(){
             this.compiledTemplate = Handlebars.compile(this.template);
         },

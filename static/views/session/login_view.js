@@ -9,7 +9,10 @@ define(['view','text!templates/sessions/login.html'],function(View,template){
             e.stopPropagation();
             var username = this.$('input[name=username]').val();
             this.model.login(username);
-            this.model.once('login',function(){ window.location = '#todos'; });
+            this.listenToOnce(this.model,'login',function(){
+                window.location = '#todos';
+                this.mediator.trigger('login');
+            });
         },
     });
 });

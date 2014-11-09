@@ -6,6 +6,10 @@ define(['view','text!templates/todos/index.html','underscore'],function(View,tem
             'change .todo input[type=checkbox]' : 'checkChange',
             'click .mark-all-complete' : 'markAllComplete',
         },
+        initialize : function(){
+            View.prototype.initialize.apply(this,arguments);
+            this.listenTo(this.collection,'add remove reset sync',this.render);
+        },
         getContext : function(){
             return _.extend(View.prototype.getContext.apply(this,arguments),{
                 numLeft : this.collection.where({complete : false }).length,
