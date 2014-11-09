@@ -28,7 +28,7 @@ define(['backbone','underscore','controllers','models/session'],function(Backbon
                     delete this.currentView;
                 }
                 this.currentView = view;
-                this.currentView.setElement('body').render();
+                this.currentView.setElement('.main-content').render();
             }
         },
     });

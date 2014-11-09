@@ -8,8 +8,14 @@ define(['handlebars'],function(Handlebars){
             return this;
         },
         getContext : function(){
-            var obj = this.model || this.collection;
-            return obj ? obj.toJSON() : {};
+            var context = {};
+            if (this.model){
+                context.model = this.model.toJSON();
+            }
+            if (this.collection){
+                context.collection = this.collection.toJSON();
+            }
+            return context;
         },
     });
 });

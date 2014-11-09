@@ -1,5 +1,6 @@
 define(['backbone'],function(Backbone){
     return Backbone.Collection.extend({
-        urlRoot : '/todos',
+        model : Backbone.Model.extend({ idAttribute : '_id' }),
+        url : '/todos',
     });
 });

@@ -1,0 +1,33 @@
+body {
+    background-color: lightgray;
+}
+
+.main-content {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 10px 40px;
+    border-radius: 10px;
+}
+
+h1 {
+    text-align: center;
+}
+
+.todo:nth-child(odd) {
+    background-color: lightblue;
+}
+.todo {
+    padding: 5px;
+    margin: 5px;
+    border-radius: 5px;
+}
+
+.todos {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.todo-footer {
+    min-height: 25px;
+}
