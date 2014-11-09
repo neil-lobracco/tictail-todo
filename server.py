@@ -20,13 +20,14 @@ def createTodo(ownerId, details):
 
 @app.route('/')
 def home():
-    user = session.get('userId')
-    context = {}
-    context['userId'] = session.get('userId'),
-    context['todos'] = getTodos(session.get('userId')),
+    context = {
+        'userId' : session.get('userId'),
+        'todos' : getTodos(session.get('userId'))
+    }
+    print context
     return render_template("index.html",**context)
 
-@app.route('/login', methods=['POST'])
+@app.route('/sessions', methods=['POST'])
 def login():
     username = request.args['username']
     user = users.find_one({username : username})
@@ -38,8 +39,8 @@ def login():
     session['userId'] = userId
     return jsonify({ "result" : "success", "userId" : userId })
 
-@app.route('/logout', methods=['POST'])
-def logout():
+@app.route('/sessions/<id>t', methods=['DELETE'])
+def logout(userId):
     session['userId'] = None
     return jsonify({ "result" : "success"})
 
