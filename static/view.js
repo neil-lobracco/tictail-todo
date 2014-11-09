@@ -1,4 +1,4 @@
-define(['handlebars',function(Handlebars){
+define(['handlebars'],function(Handlebars){
     return Backbone.View.extend({
         initialize : function(){
             this.compiledTemplate = Handlebars.compile(this.template);

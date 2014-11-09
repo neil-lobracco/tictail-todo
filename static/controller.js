@@ -1,9 +1,9 @@
-define(i['view',function(View){
+define(['view'],function(View){
     var Controller = function(){
         this.initialize.apply(this,arguments);
     };
     Controller.prototype.protectedActions = [];
     Controller.prototype.defaultAction = 'index';
-    Controller.prototype.extend = View.extend;
+    Controller.extend = View.extend;
     return Controller;
 });

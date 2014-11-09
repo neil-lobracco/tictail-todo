@@ -1,4 +1,4 @@
-define(['backbone','config'],function(Backbone){
+define(['backbone'],function(Backbone){
     return Backbone.Model.extend({
         urlRoot : '/sessions',
         idAttribute : 'userId',
