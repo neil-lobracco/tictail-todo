@@ -13,6 +13,7 @@
     <body>
         <script>
             window.userId = {{userId | tojson | safe}};
+            window.username = {{username | tojson | safe}};
             window.todos = {{todos | tojson | safe}};
         </script>
         <script data-main="static/main.js" src="static/require.js"></script>

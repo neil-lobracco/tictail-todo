@@ -12,15 +12,15 @@ define(['backbone','underscore','controllers','models/session'],function(Backbon
            ':controller/:action/:id' : 'handleAction',
         },
         handleAction : function(controller,action,id){
-            var controller = Controllers[controller || this.defaultController];
+            var controller = Controllers[controller || this.defaultController] || Controllers[this.defaultController];
             action = action || controller.defaultAction;
             if (_.contains(controller.protectedActions,action) && this.sessionController.loginRequired()){
-                controller = this.sessionController;
-                action = 'login';
+                window.location = '#sessions/login';
+                return;
             }
             var view = controller[action]({
                 id : id,
-                session : this.session,
+                session : this.sessionController,
             });
             if (view){
                 if (this.currentView){

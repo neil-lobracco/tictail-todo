@@ -5,6 +5,7 @@ define(['view','text!templates/todos/index.html','underscore'],function(View,tem
             'submit form' : 'createTodo',
             'change .todo input[type=checkbox]' : 'checkChange',
             'click .mark-all-complete' : 'markAllComplete',
+            'click .remove' : 'removeTodo',
         },
         initialize : function(){
             View.prototype.initialize.apply(this,arguments);
@@ -13,6 +14,7 @@ define(['view','text!templates/todos/index.html','underscore'],function(View,tem
         getContext : function(){
             return _.extend(View.prototype.getContext.apply(this,arguments),{
                 numLeft : this.collection.where({complete : false }).length,
+                username : this.options.username,
             });
         },
         createTodo : function(e){
@@ -23,6 +25,11 @@ define(['view','text!templates/todos/index.html','underscore'],function(View,tem
                 complete : false,
             });
             this.render();
+        },
+        removeTodo : function(e){
+            var $input = this.$(e.currentTarget);
+            var model = this.collection.get($input.parent().parent().attr('data-todo-id'));
+            model.destroy();
         },
         checkChange : function(e){
             var $input = this.$(e.currentTarget);

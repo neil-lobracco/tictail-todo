@@ -1,8 +1,9 @@
 define(['controller','models/session','views/session/login_view'],function(Controller,Session,LoginView){
     return Controller.extend({
         initialize : function(){
-            this.session = new Session({ userId : window.userId });
+            this.session = new Session({ userId : window.userId, username : window.username });
             delete window.userId;
+            delete window.username;
         },
         loginRequired : function(){
             return this.session.loginRequired();
@@ -15,6 +16,9 @@ define(['controller','models/session','views/session/login_view'],function(Contr
         },
         login : function(params){
             return new LoginView({ model : this.session });
+        },
+        getUsername : function(){
+            return this.session.get('username');
         },
     });
 });

@@ -22,6 +22,9 @@ h1 {
     margin: 5px;
     border-radius: 5px;
 }
+.todo.completed .text {
+    text-decoration: line-through;
+}
 
 .todos {
     margin-top: 20px;

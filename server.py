@@ -1,9 +1,9 @@
 from flask import Flask, session, redirect, url_for, escape, request, render_template, jsonify, Response
 from pymongo import MongoClient
 from bson.objectid import ObjectId
-import datetime, json
+import datetime, json, os
 
-client = MongoClient()
+client = MongoClient(os.getenv('MONGO_URL'))
 users = client.todo.users
 todos = client.todo.todos
 app = Flask(__name__)
@@ -24,15 +24,30 @@ def createTodo(ownerId, details):
     todo['owner'] = str(todo['owner'])
     return todo
 
-def updateTodo(todo):
-    todos.update({'_id' : ObjectId(todo['_id'])},{ '$set' : { 'complete' : todo['complete'] } })
+def updateTodo(todo,expectedOwner):
+    todos.update({'_id' : ObjectId(todo['_id']), 'owner' : ObjectId(expectedOwner)},{ '$set' : { 'complete' : todo['complete'] } })
     return todo
+
+def removeTodo(todoId,expectedOwner):
+    todos.remove({'_id' : ObjectId(todoId), 'owner' : ObjectId(expectedOwner)})
+    return None
+
+def getUser(userId):
+    return users.find_one({'_id' : ObjectId(userId) })
 
 @app.route('/')
 def home():
+    userId = session.get('userId')
+    username = None
+    user = getUser(userId)
+    if user is None:
+        userId = None
+    else:
+        username = user['username']
     context = {
-        'userId' : session.get('userId'),
-        'todos' : getTodos(session.get('userId'))
+        'userId' : userId,
+        'todos' : getTodos(userId),
+        'username' : username,
     }
     return render_template("index.html",**context)
 
@@ -64,8 +79,14 @@ def create():
 
 @app.route('/todos/<todoId>', methods=['PUT'])
 def update(todoId):
-    updateTodo(request.json)
+    updateTodo(request.json,session.get('userId'))
     return jsonify(request.json)
 
+@app.route('/todos/<todoId>', methods=['DELETE'])
+def destroy(todoId):
+    removeTodo(todoId,session.get('userId'))
+    return ""
+
+app.secret_key = "8xkgf643lkf23hf";
 app.secret_key = "8xkgf643lkf23hf";
 app.run(debug=True)

@@ -11,7 +11,8 @@ define(['controller','views/todo/index','collections/todos'],function(Controller
         },
         protectedActions : ['index'],
         index : function(params){
-            return new TodosView({ collection : this.todos });
+            var username = params.session.getUsername();
+            return new TodosView({ collection : this.todos, username : username });
         },
     });
 });

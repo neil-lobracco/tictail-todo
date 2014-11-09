@@ -1,7 +1,7 @@
 <a href='#sessions/logout' class='switch-user pull-right'>
     Switch user
 </a>
-<h1>Todos</h1>
+<h1>{{username}}'s Todos</h1>
 <hr>
 <form class='create-todo row'>
     <div class='col-sm-8'>
@@ -13,12 +13,17 @@
 </form>
 <div class='todos'>
     {{#each collection}}
-    <div class='row todo' data-todo-id={{_id}}>
+    <div class='row todo{{#if complete}} completed{{/if}}' data-todo-id='{{_id}}'>
         <div class='col-xs-2 check'>
             <input type='checkbox' {{#if complete}}checked{{/if}}>
         </div>
-        <div class='col-xs-10 text'>
+        <div class='col-xs-8 text'>
             {{text}}
+        </div>
+        <div class='col-xs-2'>
+            <button class='btn btn-link remove'>
+                remove
+            </button>
         </div>
     </div>
     {{/each}}
